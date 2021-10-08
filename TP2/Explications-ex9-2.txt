@@ -1,0 +1,69 @@
+On cherche tous les nombres premiers entre a et b.
+On sait que a < b.
+a et b sont compris.
+
+On va tester chaque nombre entre a et b, on a: a, a+1, a+2, ..., b.
+On utilise une boucle for.
+=> for (i = a; i < b; i++){}
+
+On cherche a savoir si a, a+1, a+2, ..., b est premier.
+On est à l'intérieur la première boucle, donc le nombre qu'on est actuellement en train de tester s'appelle i.
+On va essayer de diviser i par tous les nombres de 1 à i. Donc par 1, 2, 3, ..., i.
+On utilise une autre boucle for.
+On a déjà utilisé la variable i, alors cette fois on va prendre j.
+=> for (j = 1; j < i; j++){}
+
+Si la division de i par un nombre est égale à 0, alors ce nombre est un diviseur de i. Alors on ajoute 
+1 à diviseurs. 
+Donc si i et divisible par j, on ajoute 1 aux diviseurs de i.
+=> if (i % j == 0) diviseurs++;
+
+Un nombre premier a par définition exactement 2 diviseurs.
+Si i a deux diviseurs exactement, alors il est premier
+=> if (diviseurs == 2) cout << i << " ";
+
+Donc:
+
+#include <iostream>
+using namespace std;
+
+-------------------------------------------------------------
+
+int main() {
+  int a,b;
+  cout << "Donnez les valeurs de a et b: \n";
+  cin >> a >> b;
+
+  for (i = a; i < b; i++) {
+    for (j = 1; j < i; j++) {
+      if (i % j == 0) {
+        diviseurs++;
+      }
+    }
+    if (diviseurs == 2) {
+      cout << i << " ";
+    }
+    diviseurs = 0;
+  }
+  return 0;
+}
+
+-------------------------------------------------------------
+
+Écriture plus facile à comprendre:
+
+int main() {
+  int a,b;
+  cout << "Donnez les valeurs de a et b: \n";
+  cin >> a >> b;
+  for (int i = number1; i <= number2; i++) {
+    for (int j = 1; j <= i; j++)
+      if (i % j == 0) divisors++;
+    if (divisors == 2) cout << i << " ";
+    divisors = 0;
+  }
+  return 0;
+}
+
+Si un if ne contient qu'une seule instruction, on n'est pas obligé de mettre des crochets ({}). 
+Pareil pour les boucles for.
