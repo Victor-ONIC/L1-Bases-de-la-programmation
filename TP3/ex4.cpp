@@ -7,25 +7,18 @@ using namespace std;
 int main() {
   char password[100] = {};
   srand(time(NULL));
-  // Création de la base de caractères du test de vérification:
   char sequence[63] =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   char special[17] = "<>@&/!?#=+-_.,:";
   char charSpecial = special[rand() % 16];
-  // Création du tableau contenant la chaîne de caractères du test de
-  // vérification:
   int testLength = rand() % 6 + 5;  // 5, 6, 7, 8, 9, 10.
   const int testTableLength = testLength + 1;
   char test[testTableLength] = {};
   const int answerLength = 2 * testTableLength - 1;
-  // Création du tableau contenant la chaîne de caractères de la 'réponse' au
-  // test:
   char answer[answerLength] = {};
-  // Création du tableau contenant la réponse donnée par l'utilisateur:
   char answerGiven[answerLength] = {};
   int attempts = 1;
   int answerIndex;
-
 wrongPassword:
   int length = 0;
   bool hasNumber = false;
@@ -35,9 +28,7 @@ wrongPassword:
   bool hasGoodLength = false;
   cout << "Donnez un mot de passe: ";
   cin.getline(password, 100);
-  while (password[length] != '\0')  // Calcul de la longueur du mot de passe.
-    length++;
-    cout << "length: " << length << endl;
+  while (password[length] != '\0') length++;
   // Vérification de l'éligibilité du mot de passe:
   for (int i = 0; i < length; i++) {
     if (length >= 4 && length <= 12) hasGoodLength = true;
@@ -63,7 +54,7 @@ wrongPassword:
     answer[2 * j] = test[j];
     answer[2 * j + 1] = charSpecial;
   }
-  answer[answerLength - 2] = '\0';  // Conséquence de la boucle de création de 'answer'.
+  answer[answerLength - 2] = '\0';
   cout << "- - - - - - Prouvez que vous n'etes pas un robot - - - - - -\n";
   cout << "\nReecrivez: " << '"' << test << '"'
        << " en separant chaque caractere par ceci: " << '"' << charSpecial
@@ -83,8 +74,6 @@ wrongAnswer:
                 "definitivement.\n";
         return 0;
       }
-      // Dès qu'un caractère est différent de la réponse attendue, l'essai est
-      // considéré comme érronné.
       cout << "\nPas de correspondance. Reessayez.\n";
       goto wrongAnswer;
     }
