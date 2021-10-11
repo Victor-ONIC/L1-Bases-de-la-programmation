@@ -17,7 +17,7 @@ int main() {
   const int answerLength = 2 * testTableLength - 1;
   char answer[answerLength] = {};
   char answerGiven[answerLength] = {};
-  int attempts = 1;
+  int attempts = 0;
   int answerIndex;
 wrongPassword:
   int length = 0;

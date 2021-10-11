@@ -23,6 +23,7 @@ int main() {
       j -= 2;
     }
   }
+  // Affichage une fois trié:
   for (int i = 0; i < N; i++) {
     cout << T[i] << " ";
   }
