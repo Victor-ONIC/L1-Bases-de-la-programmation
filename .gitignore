@@ -7,6 +7,7 @@
 *.pdf
 
 *.exe
+*.o
 
 /TP4/img297.gif
 /TP4 !/img297.gif
