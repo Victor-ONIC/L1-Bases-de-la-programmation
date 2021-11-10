@@ -5,93 +5,73 @@ struct date {
   int j, m, a;
 };
 
-struct compte {  // 8
-  char nom[15];
-  char prenom[15];
-  date dateNaissance;
-  float solde;
+struct compte {
+  char nom[20], prenom[20];
+  date naissance;
+  int solde;
 };
 
-bool egale(date& d1, date& d2);
-int askN(date T[], int Nmax);
-void afficher(date T[], int N);
-bool inTable(date T[], int N, date D);
-bool anterieure(date d1, date d2);
-void insertDate(date T[], int N, date D);
-void trier(date T[], int N);
-void solde(compte T[], int N, int& soldeMin, int& soldeMax, int& Moyenne);
+void saisir_une_date(date &d);
+bool egales(date &d1, date &d2);
+void saisir_tab_dates(date T[], int Nmax, int &N);
+void afficher_une_date(date &d);
+void afficher_tab_dates(date T[], int N);
+bool apprtient(date T[], int N, date &D);
+bool ant(date &d1, date &d2);
+void inserer(date T[], int N, date &D);
+void solde_min_max_moy(compte T[], int N, int &min, int &max, double &moyenne);
 
 int main() {
 
-  // 1
-  cout << "---Question 1---" << endl;
-  date dates1[] = {};
-  cout << "Entrez deux dates afin de savoir si elles sont egales:" << endl;
-  cout << "Premiere: " << endl;
-  cin >> dates1[0].j;
-  cin >> dates1[0].m;
-  cin >> dates1[0].a;
-  cout << "Deuxieme: " << endl;
-  cin >> dates1[1].j;
-  cin >> dates1[1].m;
-  cin >> dates1[1].a;
-  if (egale(dates1[0], dates1[1])) cout << "Egales." << endl;
-  else cout << "Inegales." << endl << endl;
-  
-  // 2
-  cout << "---Question 2---" << endl;
-  date dates2[1000];
-  int asked = askN(dates2, 1000);
-  cout << "Le tableau contiendra " << asked << " dates." << endl;
+  date d1, d2;
 
-  // 3
-  cout << "\n---Question 3---" << endl;
-  date dates3[5] = {
+  cout << "------ Fonction 'egales' ------\n";
+  cout << "Rentrez deux dates:\n\n";
+  cout << "Premiere date:\n";
+  saisir_une_date(d1);
+  cout << "\nSeconde date:\n";
+  saisir_une_date(d2);
+  if (egales(d1, d2)) cout << "\nEgales.\n";
+  else cout << "\nInegales.\n";
+  cout << "------ Fin ------\n\n\n";
+
+  cout << "------ Fonction 'saisir_tab_dates' ------\n";
+  date Table_Dates[100];
+  int n;
+  saisir_tab_dates(Table_Dates, 100, n);
+  cout << "------ Fin ------\n\n\n";
+
+  cout << "------ Fonction 'afficher_une_date' ------\n";
+  cout << "Affichons la premiere date du tableau:\n";
+  afficher_une_date(Table_Dates[0]);
+  cout << "------ Fin ------\n\n\n";
+
+  cout << "------ Fonction 'afficher_tab_dates' ------\n";
+  cout << "Affichons tout le tableau:\n";
+  afficher_tab_dates(Table_Dates, n);
+  cout << "------ Fin ------\n\n\n";
+
+  cout << "------ Fonction 'appartient' ------\n";
+  cout << "Rentrez une date afin de voir si elle est presente dans le tableau:\n";
+  saisir_une_date(d1);
+  if (apprtient(Table_Dates, n, d1)) cout << "\nPresente dans le tableau.\n";
+  else cout << "\nAbsente du tableau.\n";
+  cout << "------ Fin ------\n\n\n";
+
+  cout << "------ Fonction 'ant' ------\n";
+  cout << "Entrez deux dates, afin de voir laquelle est anterieure:\n\n";
+  cout << "Premiere date:\n";
+  saisir_une_date(d1);
+  cout << "Seconde date:\n";
+  saisir_une_date(d2);
+  if (ant(d1, d2)) cout << "\nLa premiere date est anterieure.\n";
+  else cout << "\nLa seconde date est anterieure.\n";
+  cout << "------ Fin ------\n\n\n";
+
+  cout << "------ Fonction 'inserer' ------\n";
+  date dates[11] = {  // 11 car on va ajouter une date
+    {1, 1, 2000},
     {1, 1, 2001},
-    {1, 1, 2002},
-    {1, 1, 2003},
-    {1, 1, 2004},
-    {1, 1, 2005},
-  };
-  cout << "Afficher le tableau dates3:" << endl;
-  afficher(dates3, 5);
-
-  // 4
-  cout << "\n---Question 4---" << endl;
-  date dates4[] = {
-    {1, 1, 2001},
-    {1, 1, 2002},
-    {1, 1, 2003},
-    {1, 1, 2004},
-    {1, 1, 2005},
-  };
-  date dates4test = {0, 0, 0};
-  cout << "Entrez une date afin de verifier si elle est dans le tableau dates4:" << endl;
-  cin >> dates4test.j;
-  cin >> dates4test.m;
-  cin >> dates4test.a;
-  if (inTable(dates4, 5, dates4test)) cout << "Presente." << endl;
-  else cout << "Absente." << endl;
-
-  // 5
-  cout << "\n---Question 5---" << endl;
-  date dates5[] = {};
-  cout << "Entrez deux dates pour savoir laquelle est anterieure:" << endl;
-  cout << "Premiere: " << endl;
-  cin >> dates5[0].j;
-  cin >> dates5[0].m;
-  cin >> dates5[0].a;
-  cout << "Deuxieme: " << endl;
-  cin >> dates5[1].j;
-  cin >> dates5[1].m;
-  cin >> dates5[1].a;
-  if (anterieure(dates5[0], dates5[1])) cout << "La premiere est anterieure." << endl;
-  else cout << "La seconde est anterieure." << endl;
-
-  // 6
-  cout << "\n---Question 6---" << endl;
-  date dates6[11] = {  // 11 car on va ajouter une date
-    {1, 1, 1995},
     {1, 1, 2002},
     {1, 1, 2003},
     {1, 1, 2004},
@@ -99,120 +79,113 @@ int main() {
     {1, 1, 2006},
     {1, 1, 2007},
     {1, 1, 2008},
-    {1, 1, 2009},
-    {1, 1, 2010}
+    {1, 1, 2009}
   };
-  cout << "Tableau dates6 avant ajout:" << endl;
-  afficher(dates6, 10);
-  date user_date = {0, 0, 0};
-  cout << "\nEntrez une date a inserer:" << endl;
-  cin >> user_date.j;
-  cin >> user_date.m;
-  cin >> user_date.a;
-  insertDate(dates6, 11, user_date);
-  cout << "\nApres insertion:" << endl;
-  afficher(dates6, 11);
+  cout << "Entrez une date a inserer dans le nouveau tableau trie 'dates':\n";
+  saisir_une_date(d1);
+  inserer(dates, 10, d1);
+  afficher_tab_dates(dates, 11);
+  cout << "------ Fin ------\n\n\n";
 
-  // 7
-  cout << "\n---Question 7---" << endl;
-  date dates7[11] = {  // il y a 11 dates fixes
-    {1, 1, 1995},
-    {1, 1, 2008},
-    {1, 1, 2002},
-    {1, 1, 2003},
-    {1, 1, 2004},
-    {1, 1, 2005},
-    {2, 1, 2006},  // le 2 est au dessus du 1
-    {1, 1, 2006},
-    {1, 1, 2007},
-    {1, 1, 2009},
-    {1, 1, 2010}
-  };
-  cout << "Le tableau dates7 avant tri:" << endl;
-  afficher(dates7, 11);
-  trier(dates7, 11);
-  cout << "\nApres le tri:" << endl;
-  afficher(dates7, 11);
+  cout << "------ Fonction 'solde_min_max_moy' ------\n";
+  compte V = {"ONIC", "Victor", {4, 3, 2003}, 10000};
+  compte M = {"PELLOUX", "Marc", {16, 1, 2003}, 12000};
+  compte S = {"SICCHIO", "Simon", {24, 12, 2003}, 16000};
+  compte Comptes[] = {V, M, S};
+  int minimum, maximum;
+  double moyenne;
+  cout << "Affichons les details des comptes du tableau Comptes:\n";
+  solde_min_max_moy(Comptes, 3, minimum, maximum, moyenne);
+  cout << "Solde minimal: " << minimum << endl;
+  cout << "Solde maximal: " << maximum << endl;
+  cout << "Moyenne des soldes: " << moyenne/3 << endl;
+  cout << "------ Fin ------\n";
 
-  // 9
-  cout << "\n---Question 9---" << endl;
-  compte bouboules[3] = {
-    {"ONIC", "Victor", {4, 3, 2003}, 500},
-    {"SICCHIO", "Simon", {24, 12, 2003}, 12000},
-    {"PELLOUX", "Marc", {16, 1, 2003}, 9999},
-  };
-  int min, max, mean;
-  solde(bouboules, 3, min, max, mean);
-  cout << "Caracteristiques des comptes du tableau bouboules:" << endl;
-  cout << "Min: " << min << endl;
-  cout << "Max: " << max << endl;
-  cout << "Moyenne: " << mean << endl; 
-  
   return 0;
 }
 
-// Fonctions
-bool egale(date& d1, date& d2) {  // 1-
-  if (d1.a == d2.a && d1.m == d2.m && d1.j == d2.j) return true;
+
+void saisir_une_date(date &d) {
+  cout << "\nEntrez le jour: ";
+  cin >> d.j;
+  cout << "Entrez le mois: ";
+  cin >> d.m;
+  cout << "Entrez l'annee: ";
+  cin >> d.a;
+}
+
+bool egales(date &d1, date &d2) {
+  if (d1.j == d2.j and d1.m == d2.m and d1.a == d2.a)
+    return true;
+  else
     return false;
 }
 
-int askN(date T[], int Nmax) {  // 2-
-  int N = 0;
-  do {
-    cout << "Entrez N le nombre de dates dans le tableau: ";
+void saisir_tab_dates(date T[], int Nmax, int &N) {
+  cout << "Entrez N le nombre de dates: ";
+  cin >> N;
+  while (N > Nmax or N <= 0) {
+    cout << "Entrez N le nombre de dates: ";
     cin >> N;
-  } while (N < 1 || N > Nmax);
-  return N;
-}
-
-void afficher(date T[], int N) {  // 3-
-  for (int i = 0; i < N; i++) {
-    cout << T[i].j << "/" << T[i].m << "/" << T[i].a << endl;
   }
+  for (int i = 0; i < N; i++) saisir_une_date(T[i]);
 }
 
-bool inTable(date T[], int N, date D) {  // 4-
-  for (int i = 0; i < N; i++) if (egale(D, T[i])) return true;
+void afficher_une_date(date &d) {
+  cout << d.j << "/" << d.m << "/" << d.a << endl;
+}
+
+void afficher_tab_dates(date T[], int N) {
+  for (int i = 0; i < N; i++) afficher_une_date(T[i]);
+}
+
+bool apprtient(date T[], int N, date &D) {
+  for (int i = 0; i < N; i++)
+    if (egales(D, T[i])) return true;
   return false;
 }
 
-bool anterieure(date d1, date d2) {  // 5-
-  return (d1.a < d2.a || (d1.m < d2.m && d1.a <= d2.a) ||
-          (d1.j < d2.j && d1.m <= d2.m && d1.a <= d2.a));
-}
-
-void insertDate(date T[], int N, date D) {  // 6-
-  T[N - 1] = D;
-  for (int i = N - 2; i >= 0; i--) {
-    if (anterieure(D, T[i])) {
-      T[i + 1] = T[i];
-      T[i] = D;
+bool ant(date &d1, date &d2) {
+  if (d1.a == d2.a) {
+    if (d1.m == d2.m) {
+      if (d1.j <= d2.j)
+        return true;
+      else
+        return false;
     } else {
-      break;
+      if (d1.m < d2.m)
+        return true;
+      else
+        return false;
     }
+  } else {
+    if (d1.a < d2.a)
+      return true;
+    else
+      return false;
   }
 }
 
-void trier(date T[], int N) {  // 7-
-  for (int i = 1; i < N; i++) {
-    insertDate(T, i, T[i - 1]);
+void inserer(date T[], int N, date &D) {  // N étant le nombre de dates dans T
+  T[N] = D;
+  int j = N;
+  while (j >= 1 and ant(T[j], T[j - 1])) {
+    // échanger T[j] et T[j-1]
+    date tmp = T[j];
+    T[j] = T[j - 1];
+    T[j - 1] = tmp;
+    j = j - 1;
   }
 }
 
-void solde(compte T[], int N, int& soldeMin, int& soldeMax,
-           int& Moyenne) {  // 9-
-  int min = T[0].solde;
-  int max = T[0].solde;
-  int sum = 0;
-  int index = 0;
+void solde_min_max_moy(compte T[], int N, int &min, int &max, double &moyenne) {
+  min = max = T[0].solde;
+  moyenne = 0.0;
   for (int i = 0; i < N; i++) {
-    if (T[i].solde < min) min = T[i].solde;
-    if (T[i].solde > max) max = T[i].solde;
-    sum += T[i].solde;
-    index++;
+    if (T[i].solde > max)
+      max = T[i].solde;
+    else if (T[i].solde < min)
+      min = T[i].solde;
+    moyenne += T[i].solde;
   }
-  soldeMin = min;
-  soldeMax = max;
-  Moyenne = sum / index;
 }
