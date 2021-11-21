@@ -1,15 +1,6 @@
-/Cours/*
-
 *.zip
 
-*.vscode
-
-*.pdf
 *.url
 
 *.exe
 *.o
-
-/TP4/img297.gif
-/TP4 !/img297.gif
-/vim.md
