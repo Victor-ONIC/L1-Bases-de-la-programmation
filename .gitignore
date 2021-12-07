@@ -4,3 +4,6 @@
 
 *.exe
 *.o
+
+/CM
+/sandbox
