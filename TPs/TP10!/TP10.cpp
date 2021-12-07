@@ -7,23 +7,21 @@ struct matrice {
   double *T;
 };
 
-matrice *construit_matrice(int ligne, int colonne) {
+matrice *construit_matrice(int ligne, int colonne) {  // on pourrait prendre des unsigned int (plus propre)
   matrice *m = new matrice;
   m->nbc = colonne;
   m->nbl = ligne;
-  double Tableau[colonne*ligne] = {};
-  m->T = Tableau;
+  m->T = new double[ligne * colonne];
   return m;
 }
 
 void construit_matrice(matrice &A, int ligne, int colonne) {
   A.nbc = colonne;
   A.nbl = ligne;
-  double Tableau[colonne*ligne] = {};
-  A.T = Tableau;
+  A.T = new double[ligne * colonne];
 }
 
-void transpose(matrice &M) {
+void transpose(matrice &M) {  // ne marche que pour les matrices carrées ???
   double transpose[M.nbl * M.nbc] = {};
   for (int i = 0; i < M.nbl; i++) {
     for (int j = 0; j < M.nbc; j++) {
@@ -35,14 +33,16 @@ void transpose(matrice &M) {
   } 
 }
 
-matrice *add(matrice &A, matrice &B) {
+matrice *add(matrice &A, matrice &B) {  // que pour les matrices carrées ?!
   if (A.nbc != B.nbc || A.nbl != B.nbl) {
     std::cout << "Erreur: fonction add ne peut pas faire la somme.";
-    return NULL;
+    return nullptr;
   }
   matrice *sum = construit_matrice(A.nbl, A.nbc);
-  for (int i = 0; i < A.nbc * A.nbl; i++) {
-    sum->T[i] = A.T[i] + B.T[i];
+  for (int i = 0; i < sum->nbl; i++) {
+    for (int j = 0; j < sum->nbc; j++) {
+      sum->T[i * sum->nbc + j] = A.T[i * A.nbc + j] + B.T[i * B.nbc + j];
+    }
   }
   return sum;
 }
@@ -50,7 +50,7 @@ matrice *add(matrice &A, matrice &B) {
 matrice *add_pointeur(matrice *A, matrice *B) {
   if (A->nbc != B->nbc || A->nbl != B->nbl) {
     std::cout << "Erreur: fonction add_pointeur ne peut pas faire la somme.";
-    return NULL;
+    return nullptr;
   }
   matrice *sum = construit_matrice(A->nbl, A->nbc);
   for (int i = 0; i < A->nbc * A->nbl; i++) {
@@ -62,7 +62,7 @@ matrice *add_pointeur(matrice *A, matrice *B) {
 matrice *mult(matrice &A, matrice &B) {
   if (!(A.nbc == B.nbl)) {
     std::cout << "Erreur: fonction mult ne peut pas faire le produit.";
-    return NULL;
+    return nullptr;
   }
   matrice *X = construit_matrice(A.nbl, B.nbc);
   for (int i = 0; i < X->nbc * X->nbl; i++) {
