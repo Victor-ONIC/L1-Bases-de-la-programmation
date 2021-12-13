@@ -1,51 +1,92 @@
-#include <iostream>  // attention au double include
+/**
+ * @file main.cpp
+ * @author ONIC Victor victor.onic@alumni.univ-avignon.fr
+ * @date 13-12-2021
+ * 
+ */
+
 #include "func.h"
+#include "affichage.h"
 
 int main() {
 
-  // Prompt player to choose difficulty level
-  // difficulty parameters: ligne, colonne, nb_mines (nb_joker...)
-  // base difficulty is 1.
-  // Easy: 1, Medium: 2, Hard: 3.
-
   aff_banner();
 
-  int t_ligne, t_colonne, difficulty;
-  menu(t_ligne, t_colonne, difficulty);
+  int init_ligne, init_colonne, difficulty;
+  menu(init_ligne, init_colonne, difficulty);
 
-  // le truc, c'est qu'il faut calculer les mines après que le joueur ait choisi un emplacement, pour ne pas qu'il tombe sur une mine dès le début...
-  // VOIR LA FONCTION Init_jeu !!!!!
+  int win_condition = init_ligne * init_colonne - difficulty;
 
+  int action, ligne, colonne;
+  matrice *Jeu = Init_jeu(init_ligne, init_colonne, difficulty, ligne, colonne);
+  matrice *mine_map = mines_autour(Jeu);
 
-  matrice *Jeu = Init_jeu(t_ligne, t_colonne, difficulty);
-  matrice *mine_map = mines_autour(Jeu);  // map des mines de Jeu
-  // TODO supprimer et replacer les mines entourées de 8 autres mines.
+  bool poser_drapeau__flag = false, lever_drapeau__flag = false;
+  int creuser__flag = -2;
 
-  bool win = 0, lose = 0;
-  int mines_OK = 0, discovered = 0;
+  int discovered = 0;
 
-  while (win == 0 || lose == 0) {
-    affichage(Jeu, mine_map);
-    // input from player (creuser, drapeau, quitter)
+  long long int timer_start = time(NULL);
+
+  int win = 0;
+  while (win == 0) {
+    
+    if (discovered == 0) {
+      creuser(Jeu, mine_map, ligne, colonne, discovered);
+    }
+
+    affichage(Jeu, mine_map, 0);
+    
+    if (poser_drapeau__flag) {
+      std::cout << "\nVous ne pouvez pas poser de drapeau ici.\n";
+      poser_drapeau__flag = false;
+    }
+    if (lever_drapeau__flag) {
+       std::cout << "\nVous ne pouvez pas lever de drapeau ici.\n";
+       lever_drapeau__flag = false;
+    }
+    if (creuser__flag == -1) {
+       std::cout << "\nVous ne pouvez pas creuser ici.\n";
+       creuser__flag = -2;
+    }
+
+    do_what(Jeu, action, ligne, colonne, 0);
+    switch (action) {
+      case 1:
+        creuser__flag = creuser(Jeu, mine_map, ligne, colonne, discovered);
+        break;
+      case 2:
+        poser_drapeau__flag = poser_drapeau(Jeu, ligne, colonne);
+        break;
+      case 3:
+        lever_drapeau__flag = lever_drapeau(Jeu, ligne, colonne);
+        break;
+      case 4:
+        std::cout << "\nAu revoir !\n";
+        destructor_m(Jeu);
+        destructor_m(mine_map);
+        return 0;
+    }
+
+    if (discovered == win_condition) win = 1;
+    if (creuser__flag == 0) win = -1;
   }
+  int temps = time(NULL) - timer_start;
 
-/*
-  while ( ! (joueur a gagné || joueuer a perdu) ) {
-    affichage(Jeu, mine_map);
-    int1 = nombre de mines découvertes (avec drapeau = 4)
-    int2 = nombre de cases découvertes (creusées = 1)
-    if int1 = nb_mines ET int2 = ligne*colonne - nb_mines
-      GAGNÉ
-    if case creusée est une mine (= 2)
-      PERDU
+  if (win == 1) {  // GAGNÉ
+    affichage(Jeu, mine_map, 0);
+    std::cout << "\nFELICITATIONS !!!!!!!!!!\n";
+    int score = calc_score(Jeu, temps, false);
+    std::cout << "\nScore: " << score << std::endl;
   }
-*/
-  // le joueuer gagne si:
-  // - toutes les cases contenant des mines ont un drapeau.
-  // - toutes les cases ne contenant pas de mines sont creusées.
+  else if (win == -1) {  // PERDU
+    affichage(Jeu, mine_map, 1);
+    std::cout << "\nDOMMAGE !!!!!!!!!!!!!!!\n";
+    int score = calc_score(Jeu, temps, true);
+    std::cout << "\nScore: " << score << std::endl;
+  }
 
   destructor_m(Jeu);
   destructor_m(mine_map);
-
   return 0;
 }

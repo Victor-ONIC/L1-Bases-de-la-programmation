@@ -88,7 +88,7 @@ int main() {
     cout << "d2 est anterieure a d1 !" << endl;
 
   // Partie 5 ----------
-  // TODO Si la date ajoutée est déjà dans le tableau ?
+  // Et si la date ajoutée est déjà dans le tableau ?
   int indexMin;
   date tmp[2];
   char insertDateChar[15] = {};

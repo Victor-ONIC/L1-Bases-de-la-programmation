@@ -7,7 +7,6 @@ situation:
 - 2: mine           pas creusée
 - 3: pas de mine    drapeau
 - 4: mine           drapeau
-- -1: espace vide
 
 Au début du jeu, aucune case n'est minée, et certaines cases ont une mine.
 Donc toutes les cases sont soit 0, soit 2.
