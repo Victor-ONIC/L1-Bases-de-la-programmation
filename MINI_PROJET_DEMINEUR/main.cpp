@@ -3,6 +3,8 @@
  * @author ONIC Victor victor.onic@alumni.univ-avignon.fr
  * @date 13-12-2021
  * 
+ * Les cases apparaissent comme ceci: erreur: ? case: # drapeau: P 
+ * découvert: '.' ou "n" mines: @.
  */
 
 #include "func.h"
