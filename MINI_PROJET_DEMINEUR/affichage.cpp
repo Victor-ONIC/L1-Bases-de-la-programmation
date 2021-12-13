@@ -1,12 +1,10 @@
 #include "affichage.h"
 
-using namespace std;
-
 /**
- * Clear le terminal afin d'afficher le jeu. Fonctionne partout sauf sur 
+ * Efface le terminal afin d'afficher le jeu. Fonctionne partout sauf sur 
  * l'invite de commande Windows.
  */
-void clear(void) {
+void func_clear(void) {
   cout << "\x1B[2J\x1B[3J\x1B[H";
 }
 
@@ -23,7 +21,7 @@ void menu(int &ligne, int &colonne, int &difficulty) {  // OK
   int choix_diff = 0;
   while ((taille == 1 && choix_diff > 2) || (taille == 2 && choix_diff > 6) ||
          taille <= 0 || taille > 4 || choix_diff <= 0 || choix_diff > 8) {
-    clear();
+    func_clear();
     cout << "\n\n\n\n\nChoisissez une taille de tableau: \n";  // max 30 x 50
     cout << "1.           10 x 10" << endl;
     cout << "2.           20 x 20" << endl;
@@ -152,7 +150,7 @@ void do_what(matrice *T, int &action, int &i, int &j, bool is_init) {
  * @param lost indique s'il faut afficher les mines quand le joueuer a perdu.
  */
 void affichage(matrice *T, matrice *M, int lost) {
-  clear();
+  func_clear();
   cout << "  " << "   ";
   for (int aff_col = 0; aff_col < T->nbc; aff_col++) {
     if (aff_col < 10) cout << aff_col << "  ";
@@ -197,7 +195,7 @@ void affichage(matrice *T, matrice *M, int lost) {
 
 /// Affiche la bannière du jeu.
 void aff_banner(void) {
-  clear();
+  func_clear();
   vector<string> banner;
   // 10 x 98
   banner.push_back(" ,gggggggggggg,                                                                                   ");
