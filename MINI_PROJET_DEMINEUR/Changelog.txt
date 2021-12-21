@@ -1,6 +1,0 @@
-v1.0.1
-Base game.
-
-TODO
-Rewrite the code.
-Add mine damage and player health.

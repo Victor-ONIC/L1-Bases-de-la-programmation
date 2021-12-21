@@ -1,9 +1,11 @@
 {
 	"version": "2.0.0",
 	"tasks": [
+
+
 		{
 			"type": "cppbuild",
-			"label": "C/C++: g++.exe générer le fichier actif",
+			"label": "BUILD ACTIVE FILE (SPECIFIC)",
 			"command": "C:\\msys64\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-fdiagnostics-color=always",
@@ -25,10 +27,20 @@
 			},
 			"detail": "compilateur : C:\\msys64\\mingw64\\bin\\g++.exe"
 		},
-		{
-			"type": "shell",
-			"label": "Run C++ program: g++.exe",
-			"command": "C:\\msys64\\mingw64\\bin\\g++.exe -fdiagnostics-color=always -g3 -Wall \"${file}\" -o \"${fileDirname}\\${fileBasenameNoExtension}.exe\" &&\"${fileDirname}\\${fileBasenameNoExtension}.exe\"",
+
+
+/* 		{
+			"type": "cppbuild",
+			"label": "BUILD PROJECT (ALL)",
+			"command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+			"args": [
+				"-fdiagnostics-color=always",
+				"-g3",
+				"-Wall",
+				"${fileDirname}\\*.cpp",
+				"-o",
+				"${relativeFileDirname}.exe"
+			],
 			"options": {
 				"cwd": "${fileDirname}"
 			},
@@ -36,6 +48,34 @@
 				"$gcc"
 			],
 			"detail": "compilateur : C:\\msys64\\mingw64\\bin\\g++.exe"
-		}
+		}, */
+
+
+		// {
+		// 	"type": "shell",
+		// 	"label": "BUILD AND RUN (SPECIFIC)",
+		// 	"command": "C:\\msys64\\mingw64\\bin\\g++.exe -fdiagnostics-color=always -g3 -Wall \"${file}\" -o \"${fileDirname}\\${fileBasenameNoExtension}.exe\" && \"${fileDirname}\\${fileBasenameNoExtension}.exe\"",
+		// 	"options": {
+		// 		"cwd": "${fileDirname}"
+		// 	},
+		// 	"problemMatcher": [
+		// 		"$gcc"
+		// 	],
+		// 	"detail": "compilateur : C:\\msys64\\mingw64\\bin\\g++.exe"
+		// },
+
+
+		// {
+		// 	"type": "shell",
+		// 	"label": "BUILD AND RUN (ALL)",
+		// 	"command": "C:\\msys64\\mingw64\\bin\\g++.exe -fdiagnostics-color=always -g3 -Wall \"*.cpp\" -o \"${fileDirname}.exe\" && \"${fileDirname}.exe\"",
+		// 	"options": {
+		// 		"cwd": "${fileDirname}"
+		// 	},
+		// 	"problemMatcher": [
+		// 		"$gcc"
+		// 	],
+		// 	"detail": "compilateur : C:\\msys64\\mingw64\\bin\\g++.exe"
+		// }
 	]
 }
